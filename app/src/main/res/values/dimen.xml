@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="dim_general_radius">8dp</dimen>
+
+    <dimen name="dim_login_margin_horizontal">30dp</dimen>
+    <dimen name="dim_login_height">60dp</dimen>
+    <dimen name="dim_login_text_size">28sp</dimen>
+
+    <dimen name="dim_signup_back_size">32dp</dimen>
+    <dimen name="dim_signup_title_margin">30dp</dimen>
+    <dimen name="dim_signup_edit_text_margin">30dp</dimen>
+
+    <dimen name="dim_header_margin_start">30dp</dimen>
+    <dimen name="dim_header_margin_top">5dp</dimen>
+    <dimen name="dim_header_margin_vertical">20dp</dimen>
+
+
+</resources>

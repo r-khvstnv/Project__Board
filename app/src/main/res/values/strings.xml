@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Project Boards</string>
+
+    <string name="st_get_started">Lets Get Started</string>
+
+    <string name="st_intro_description">Collaborate and Plan Together Across Multiple Devices
+        in Project Boards App</string>
+    <string name="st_login">Log in</string>
+    <string name="st_sign_up">Sign up</string>
+
+    <string name="st_name">Name</string>
+    <string name="st_email">Email</string>
+    <string name="st_password">Password</string>
+    <string name="st_confirm_password">Confirm password</string>
+    <string name="st_please_enter">Please enter</string>
+    <string name="st_enter_data">Please enter Log in data</string>
+    <string name="st_password_mismatch">Password mismatch</string>
+    <string name="st_registered">You have successfully registered</string>
+
+    <string name="st_profile"> Profile</string>
+    <string name="st_sign_out"> Sign Out</string>
+</resources>
