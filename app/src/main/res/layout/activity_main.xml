@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     android:id="@+id/drawer_layout"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
     <!--action bar-->
     <include
         layout="@layout/tool_bar_layout"
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:layout_gravity="start"
-        app:headerLayout="@layout/primary_nav_header"
+        app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/primary_drawer_menu"
         app:itemTextColor="@color/primary_drawer_menu_colors"
         app:itemIconTint="@color/primary_drawer_menu_colors"

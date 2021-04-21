@@ -3,7 +3,7 @@ package com.rkhvstnv.projectboard
 import android.os.Parcel
 import android.os.Parcelable
 
-data class UserModel(
+data class UserDataClass(
     val id: String = "", val name: String = "",
     val email: String = "", val imageProfile:  String = "",
     val mobilePhone: String = "", val fcmToken: String = "") : Parcelable {
@@ -31,12 +31,12 @@ data class UserModel(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<UserModel> {
-        override fun createFromParcel(parcel: Parcel): UserModel {
-            return UserModel(parcel)
+    companion object CREATOR : Parcelable.Creator<UserDataClass> {
+        override fun createFromParcel(parcel: Parcel): UserDataClass {
+            return UserDataClass(parcel)
         }
 
-        override fun newArray(size: Int): Array<UserModel?> {
+        override fun newArray(size: Int): Array<UserDataClass?> {
             return arrayOfNulls(size)
         }
     }

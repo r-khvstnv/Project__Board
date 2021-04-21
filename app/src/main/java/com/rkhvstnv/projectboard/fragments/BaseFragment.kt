@@ -5,44 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Bundle
-import android.os.Message
-import android.text.TextUtils.replace
 import android.view.Gravity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.constraintlayout.widget.Constraints
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
-import com.rkhvstnv.projectboard.MainActivity
+import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.R
-import com.rkhvstnv.projectboard.databinding.FragmentBaseBinding
 
 
 open class BaseFragment : Fragment() {
-    private var _binding: FragmentBaseBinding? = null
-    private val binding get() = _binding!!
     private lateinit var progressDialog: Dialog
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentBaseBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-
-
-    //get user unique id from firebase
-    fun getCurrentUserID(): String{
-        return FirebaseAuth.getInstance().currentUser!!.uid
-    }
 
     fun showSnackBarMessage(context: Context, message: String){
         val snackBar = Snackbar.make(activity!!.findViewById(android.R.id.content),
@@ -97,9 +70,5 @@ open class BaseFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
 }

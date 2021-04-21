@@ -1,14 +1,13 @@
 package com.rkhvstnv.projectboard.fragments
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
-import com.rkhvstnv.projectboard.R
+import com.rkhvstnv.projectboard.*
+import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.databinding.FragmentLogInBinding
 
 class LogInFragment : BaseFragment() {
@@ -42,24 +41,32 @@ class LogInFragment : BaseFragment() {
             val email: String = binding.etEmail.text.toString()
             val password: String = binding.etPassword.text.toString()
 
+            //dialog will be closed in appropriate method
             showProgressDialog(requireContext())
 
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-                        hideProgressDialog()
-
                         if (task.isSuccessful){
-                            val user = auth.currentUser
-                            //todo change
-                            showSnackBarMessage(requireContext(), user!!.email!!)
+                            FireStoreClass().getSignedInUserData(object : MyCallBack{
+                                override fun onCallbackObject(userData: UserDataClass) {
+                                    hideProgressDialog()
+                                    val intent = Intent(activity, MainActivity::class.java)
+                                    activity?.startActivity(intent)
+                                    activity?.finish()
+                                }
+
+                                override fun onCallbackErrorMessage(message: String) {
+                                    hideProgressDialog()
+                                    showSnackBarMessage(requireContext(), message)
+                                }
+                            })
                         }else{
+                            hideProgressDialog()
                             showSnackBarMessage(requireContext(), task.exception?.message!!)
                         }
 
                     }
         }else{
-            //todo delete
-            auth.signOut()
             showSnackBarMessage(requireContext(), getString(R.string.st_enter_data))
         }
     }

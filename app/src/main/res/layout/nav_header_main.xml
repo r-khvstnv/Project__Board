@@ -7,7 +7,6 @@
     android:background="@color/mWhite"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:theme="@style/ThemeOverlay.AppCompat.DayNight"
     >
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -31,7 +30,7 @@
         android:layout_marginStart="@dimen/dim_header_margin_start"
         />
     <TextView
-        android:id="@+id/tv_email"
+        android:id="@+id/tv_user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="123456@mail.com"

@@ -6,10 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
-import com.rkhvstnv.projectboard.FireStoreClass
+import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.databinding.FragmentSignUpBinding
-import com.rkhvstnv.projectboard.R
-import com.rkhvstnv.projectboard.UserModel
 
 class SignUpFragment : BaseFragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -56,12 +54,32 @@ class SignUpFragment : BaseFragment() {
                         if (task.isSuccessful){
                             val firebaseUser = auth.currentUser
                             //store user data in fireStore
-                            val user = UserModel(firebaseUser!!.uid, name, firebaseUser.email!!)
-                            FireStoreClass().registerUser(this, user)
-                            //todo make sth with user
-                            onBackPressed()
-                        }else{
+                            val user = UserDataClass(firebaseUser!!.uid, name, firebaseUser.email!!)
+                            FireStoreClass().registerUser(user, object : MyCallBack{
+                                override fun onCallbackObject(userData: UserDataClass) {}
+
+                                override fun onCallbackErrorMessage(message: String) {
+
+                                    hideProgressDialog()
+
+                                    if (message.isEmpty()){
+                                        //successful registration
+                                        showSnackBarMessage(requireContext(),
+                                            getString(R.string.st_registered))
+                                        //todo change dir
+                                        //todo make sth with user
+                                        onBackPressed()
+                                    }
+                                    else{
+                                        showSnackBarMessage(requireContext(), message)
+                                    }
+                                }
+
+                            })
+                        }
+                        else{
                             //display error message if tas was unsuccessful
+                            hideProgressDialog()
                             showSnackBarMessage(requireContext(), task.exception?.message.toString())
                         }
                     }

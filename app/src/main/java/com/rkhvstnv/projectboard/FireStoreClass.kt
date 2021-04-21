@@ -2,48 +2,50 @@ package com.rkhvstnv.projectboard
 
 
 
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.rkhvstnv.projectboard.fragments.BaseFragment
 
 
 class FireStoreClass {
     private val mFireStore = Firebase.firestore
+    private val auth = FirebaseAuth.getInstance()
 
-    //register new user in fireStore collections
-    fun registerUser(fragment: BaseFragment, userModel: UserModel){
+    //register new user data in fireStore collections
+    fun registerUser(userData: UserDataClass, myCallBack: MyCallBack){
         //create new collection in firebase
         mFireStore.collection(Constants.USERS).document(getCurrentUserId())
-            .set(userModel, SetOptions.merge()).addOnCompleteListener { task ->
-                    //hide progress dialog
-                    fragment.hideProgressDialog()
+            .set(userData, SetOptions.merge()).addOnCompleteListener { task ->
                     if (task.isSuccessful){
-                        fragment.showSnackBarMessage(fragment.requireContext(),
-                                "You have successfully registered")
+                        myCallBack.onCallbackErrorMessage("")
                     }else{
-                        fragment.showSnackBarMessage(fragment.requireContext(),
-                                task.exception?.message.toString())
+                        myCallBack.onCallbackErrorMessage(task.exception?.message!!)
                     }
             }
     }
 
     //sign in user with received info from fireStore
-    fun signInUser(fragment: BaseFragment){
+    fun getSignedInUserData(myCallBack: MyCallBack){
         mFireStore.collection(Constants.USERS)
-                .document(getCurrentUserId()).get().addOnSuccessListener { document ->
-                    //hide progress dialog
-                    fragment.hideProgressDialog()
-                    //save data to object
-                    val loggedUser = document.toObject<UserModel>()
-                    //show main activity
-                    fragment.startMainActivity()
-                }
+            .document(getCurrentUserId()).get().addOnSuccessListener { document ->
+                //save data to object
+                val loggedUser = document.toObject<UserDataClass>()!!
+                myCallBack.onCallbackObject(loggedUser)
+        }.addOnFailureListener {
+            myCallBack.onCallbackErrorMessage(it.message!!)
+        }
+
+
+    }
+
+    fun signOutUser(){
+        auth.signOut()
     }
     fun getCurrentUserId(): String{
-        val currentUser = FirebaseAuth.getInstance().currentUser
+        val currentUser = auth.currentUser
         return currentUser?.uid ?: ""
 
     }
