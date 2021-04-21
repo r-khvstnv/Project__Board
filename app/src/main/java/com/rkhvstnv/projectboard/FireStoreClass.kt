@@ -2,20 +2,12 @@ package com.rkhvstnv.projectboard
 
 
 
-import android.content.Intent
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import com.rkhvstnv.projectboard.R
 import com.rkhvstnv.projectboard.fragments.BaseFragment
-import com.rkhvstnv.projectboard.fragments.PrimaryFragment
-import com.rkhvstnv.projectboard.fragments.SignUpFragment
 
 
 class FireStoreClass {
