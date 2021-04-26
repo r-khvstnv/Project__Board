@@ -6,7 +6,7 @@ import android.os.Parcelable
 data class UserDataClass(
     val id: String = "", val name: String = "",
     val email: String = "", val imageProfile:  String = "",
-    val mobilePhone: String = "", val fcmToken: String = "") : Parcelable {
+    val phone: String = "", val fcmToken: String = "") : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -23,7 +23,7 @@ data class UserDataClass(
         parcel.writeString(name)
         parcel.writeString(email)
         parcel.writeString(imageProfile)
-        parcel.writeString(mobilePhone)
+        parcel.writeString(phone)
         parcel.writeString(fcmToken)
     }
 

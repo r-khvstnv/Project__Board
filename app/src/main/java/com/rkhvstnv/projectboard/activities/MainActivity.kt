@@ -4,16 +4,17 @@ package com.rkhvstnv.projectboard.activities
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
-import com.rkhvstnv.projectboard.FireStoreClass
-import com.rkhvstnv.projectboard.MyCallBack
-import com.rkhvstnv.projectboard.R
-import com.rkhvstnv.projectboard.UserDataClass
+import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.databinding.ActivityMainBinding
 import com.rkhvstnv.projectboard.databinding.NavHeaderMainBinding
+import com.rkhvstnv.projectboard.fragments.ProfileFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
@@ -29,6 +30,15 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         updateNavHeaderUserDetails()
         //set navigation listener
         binding.navView.setNavigationItemSelectedListener(this)
+
+        //get info that user changes own data or not
+        supportFragmentManager.setFragmentResultListener(Constants.PROFILE_CHANGES_KEY,
+            this){ _, bundle ->
+            val result: Boolean = bundle.getBoolean(Constants.PROFILE_BUNDLE_KEY)
+            if (result){
+                updateNavHeaderUserDetails()
+            }
+        }
     }
 
     private fun setupActionBar(){
@@ -47,9 +57,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.m_profile ->{}
+            R.id.m_profile ->{
+                replaceToFragmentAndBackStack(this, ProfileFragment())
+            }
             R.id.m_sign_out -> {
-                FireStoreClass().signOutUser()
+                MyFirebaseClass().signOutUser()
                 val intent = Intent(this, ContainerActivity::class.java)
                 //clear stack or flags as new launcher
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -66,11 +78,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         //data binding for header view
         val hBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
         //get data from fireStore
-        FireStoreClass().getSignedInUserData(object : MyCallBack {
+        MyFirebaseClass().getSignedInUserData(object : MyCallBack {
             override fun onCallbackObject(userData: UserDataClass) {
                 //user image
                 Glide.with(this@MainActivity)
-                    .load(userData.imageProfile).centerCrop()
+                    .load(userData.imageProfile).fitCenter()
                     .placeholder(R.drawable.ic_profile).into(hBinding.civProfileImage)
                 //username
                 hBinding.tvUsername.text = userData.name

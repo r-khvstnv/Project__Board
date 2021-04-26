@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Project Boards</string>
 
+    <string name="st_permission_needed_to_be_granted">Permissions required for this feature have been turned off.
+        It can be enabled under the Application Settings</string>
+    <string name="st_go_to_settings">Settings</string>
+    <string name="st_cancel">Cancel</string>
     <string name="st_get_started">Lets Get Started</string>
 
     <string name="st_intro_description">Collaborate and Plan Together Across Multiple Devices
@@ -12,6 +16,8 @@
     <string name="st_email">Email</string>
     <string name="st_password">Password</string>
     <string name="st_confirm_password">Confirm password</string>
+    <string name="st_new_password">New password</string>
+    <string name="st_phone">Phone number</string>
     <string name="st_please_enter">Please enter</string>
     <string name="st_enter_data">Please enter Log in data</string>
     <string name="st_password_mismatch">Password mismatch</string>
@@ -19,4 +25,8 @@
 
     <string name="st_profile"> Profile</string>
     <string name="st_sign_out"> Sign Out</string>
+    <string name="st_general">General</string>
+    <string name="st_security">Security</string>
+    <string name="st_save_changes">Save Changes</string>
+    <string name="st_password_changed">Password successfully changed</string>
 </resources>

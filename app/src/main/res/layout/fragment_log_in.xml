@@ -35,7 +35,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email"
-        style="@style/MyEditText"
+        style="@style/MyEditTextOutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -58,7 +58,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password"
-        style="@style/MyEditText"
+        style="@style/MyEditTextOutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"

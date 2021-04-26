@@ -7,7 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rkhvstnv.projectboard.FireStoreClass
+import com.rkhvstnv.projectboard.MyFirebaseClass
 import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.databinding.FragmentSplashBinding
 
@@ -22,7 +22,7 @@ class SplashFragment : BaseFragment() {
        _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (FireStoreClass().getCurrentUserId().isNotEmpty()){
+            if (MyFirebaseClass().getCurrentUserId().isNotEmpty()){
                 val intent = Intent(activity, MainActivity::class.java)
                 activity?.startActivity(intent)
                 activity?.finish()

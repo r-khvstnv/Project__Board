@@ -47,7 +47,7 @@ class LogInFragment : BaseFragment() {
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
-                            FireStoreClass().getSignedInUserData(object : MyCallBack{
+                            MyFirebaseClass().getSignedInUserData(object : MyCallBack{
                                 override fun onCallbackObject(userData: UserDataClass) {
                                     hideProgressDialog()
                                     val intent = Intent(activity, MainActivity::class.java)

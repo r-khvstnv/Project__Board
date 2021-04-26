@@ -3,17 +3,40 @@ package com.rkhvstnv.projectboard
 
 
 
+import android.net.Uri
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 
-class FireStoreClass {
+class MyFirebaseClass {
     private val mFireStore = Firebase.firestore
     private val auth = FirebaseAuth.getInstance()
 
+
+    /**FirebaseAuth */
+    fun getCurrentUserId(): String{
+        val currentUser = auth.currentUser
+        return currentUser?.uid ?: ""
+    }
+    fun updateUserPassword(newPassword: String, myCallBack: MyCallBack){
+        auth.currentUser?.updatePassword(newPassword)?.addOnCompleteListener { task->
+            if (task.isSuccessful){
+                myCallBack.onCallbackErrorMessage("")
+            }else{
+                myCallBack.onCallbackErrorMessage(task.exception?.message!!)
+            }
+        }
+    }
+    fun signOutUser(){
+        auth.signOut()
+    }
+
+    /**FireStore (User Data)*/
     //register new user data in fireStore collections
     fun registerUser(userData: UserDataClass, myCallBack: MyCallBack){
         //create new collection in firebase
@@ -37,16 +60,20 @@ class FireStoreClass {
         }.addOnFailureListener {
             myCallBack.onCallbackErrorMessage(it.message!!)
         }
-
-
     }
 
-    fun signOutUser(){
-        auth.signOut()
+    fun updateUserData(userHashMap: HashMap<String, Any>, myCallBack: MyCallBack){
+        mFireStore.collection(Constants.USERS)
+            .document(getCurrentUserId()).update(userHashMap).addOnCompleteListener {
+                if (it.isSuccessful){
+                    myCallBack.onCallbackErrorMessage("")
+                } else{
+                    myCallBack.onCallbackErrorMessage(it.exception?.message!!)
+                }
+            }
     }
-    fun getCurrentUserId(): String{
-        val currentUser = auth.currentUser
-        return currentUser?.uid ?: ""
 
-    }
+    /**Firebase Storage (Images)*/
+
+
 }

@@ -38,7 +38,7 @@ class SignUpFragment : BaseFragment() {
 
     private fun registerUser(){
         //remove empty spaces
-        val name: String = binding.etName.text.toString().trim { it <= ' ' }
+        val name: String = binding.etName.text.toString()
         val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
         val confirmPassword: String = binding.etConfirmPassword.text.toString().trim { it <= ' ' }
@@ -55,7 +55,7 @@ class SignUpFragment : BaseFragment() {
                             val firebaseUser = auth.currentUser
                             //store user data in fireStore
                             val user = UserDataClass(firebaseUser!!.uid, name, firebaseUser.email!!)
-                            FireStoreClass().registerUser(user, object : MyCallBack{
+                            MyFirebaseClass().registerUser(user, object : MyCallBack{
                                 override fun onCallbackObject(userData: UserDataClass) {}
 
                                 override fun onCallbackErrorMessage(message: String) {

@@ -14,5 +14,10 @@
     <dimen name="dim_header_margin_top">5dp</dimen>
     <dimen name="dim_header_margin_vertical">20dp</dimen>
 
+    <dimen name="dim_profile_margin_horizontal">30dp</dimen>
+    <dimen name="dim_profile_edit_text_margin_vertical">2dp</dimen>
+    <dimen name="dim_profile_edit_text_size">14sp</dimen>
+    <dimen name="dim_profile_block_margin_vertical">30dp</dimen>
+
 
 </resources>
