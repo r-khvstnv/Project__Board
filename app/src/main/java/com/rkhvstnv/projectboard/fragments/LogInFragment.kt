@@ -24,7 +24,7 @@ class LogInFragment : BaseFragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.ivBack.setOnClickListener {
-            onBackPressed()
+            activity?.onBackPressed()
         }
         binding.llLogIn.setOnClickListener {
             signInUser()

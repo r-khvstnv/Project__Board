@@ -10,16 +10,28 @@
     tools:context=".activities.MainActivity">
     <!--action bar-->
     <include
-        layout="@layout/tool_bar_layout"
+        layout="@layout/tool_bar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_container_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        />
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_board"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="@dimen/dim_general_margin_horizontal"
+            android:layout_gravity="bottom|end"
+            android:backgroundTint="@color/mLightGreen"
+            android:src="@drawable/ic_add"
+            app:tint="@color/mWhite"
+            />
+    </FrameLayout>
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -30,6 +42,7 @@
         app:menu="@menu/primary_drawer_menu"
         app:itemTextColor="@color/primary_drawer_menu_colors"
         app:itemIconTint="@color/primary_drawer_menu_colors"
+
         />
 
 

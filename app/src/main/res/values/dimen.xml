@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dim_general_radius">8dp</dimen>
+    <dimen name="dim_general_margin_horizontal">30dp</dimen>
 
     <dimen name="dim_login_margin_horizontal">30dp</dimen>
     <dimen name="dim_login_height">60dp</dimen>

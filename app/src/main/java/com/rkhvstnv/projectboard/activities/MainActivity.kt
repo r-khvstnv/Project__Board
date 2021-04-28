@@ -1,19 +1,22 @@
 package com.rkhvstnv.projectboard.activities
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.databinding.ActivityMainBinding
+import com.rkhvstnv.projectboard.databinding.ActivityNewBoardBinding
 import com.rkhvstnv.projectboard.databinding.NavHeaderMainBinding
+import com.rkhvstnv.projectboard.fragments.NewBoardFragment
 import com.rkhvstnv.projectboard.fragments.ProfileFragment
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -31,15 +34,26 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         //set navigation listener
         binding.navView.setNavigationItemSelectedListener(this)
 
+        binding.fabNewBoard.setOnClickListener {
+            val intent = Intent(this, NewBoardActivity::class.java)
+            startActivityForResult(intent, Constants.NEW_BOARD_CODE)
+        }
+
         //get info that user changes own data or not
-        supportFragmentManager.setFragmentResultListener(Constants.PROFILE_CHANGES_KEY,
-            this){ _, bundle ->
-            val result: Boolean = bundle.getBoolean(Constants.PROFILE_BUNDLE_KEY)
-            if (result){
-                updateNavHeaderUserDetails()
+
+
+
+
+        //show fab on back to main activity
+        //todo might can be ridiculous
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount == 0){
+                binding.fabNewBoard.visibility = View.VISIBLE
             }
         }
+
     }
+
 
     private fun setupActionBar(){
         val toolbar = findViewById<Toolbar>(R.id.toolBar)
@@ -58,7 +72,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.m_profile ->{
-                replaceToFragmentAndBackStack(this, ProfileFragment())
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivityForResult(intent, Constants.PROFILE_UPDATE_CODE)
             }
             R.id.m_sign_out -> {
                 MyFirebaseClass().signOutUser()
@@ -95,5 +110,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
 
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == Constants.PROFILE_UPDATE_CODE){
+                updateNavHeaderUserDetails()
+            }
+        }
     }
 }

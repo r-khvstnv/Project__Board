@@ -29,4 +29,7 @@
     <string name="st_security">Security</string>
     <string name="st_save_changes">Save Changes</string>
     <string name="st_password_changed">Password successfully changed</string>
+
+    <string name="st_board_name">Board Name</string>
+    <string name="st_create">Create</string>
 </resources>

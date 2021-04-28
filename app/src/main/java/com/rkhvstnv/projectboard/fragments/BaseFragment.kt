@@ -23,7 +23,7 @@ open class BaseFragment : Fragment() {
     private lateinit var progressDialog: Dialog
 
     fun showSnackBarMessage(context: Context, message: String){
-        val snackBar = Snackbar.make(activity!!.findViewById(android.R.id.content),
+        val snackBar = Snackbar.make(requireActivity().findViewById(android.R.id.content),
             message, Snackbar.LENGTH_LONG)
         snackBar.view.setBackgroundColor(ContextCompat.getColor(context, R.color.mDarkGreen))
         snackBar.setTextColor(ContextCompat.getColor(context, R.color.mWhite))
@@ -62,42 +62,9 @@ open class BaseFragment : Fragment() {
         progressDialog.dismiss()
     }
 
-    fun onBackPressed(){
-        val fm = fragmentManager
-        if (fm?.backStackEntryCount!! > 0){
-            fm.popBackStack()
-        }
-    }
 
-    /**
-     * Next dialog will be shown, if previously user reject all permissions
-     * required to gallery & share features
-     */
-    fun showRationalPermissionDialog(context: Context){
-        val permissionAlertDialog = AlertDialog.Builder(context).setMessage(R.string.st_permission_needed_to_be_granted)
-        //positive button
-        permissionAlertDialog.setPositiveButton(getString(R.string.st_go_to_settings)){ _: DialogInterface, _: Int ->
-            try {
-                //move to app settings
-                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                val uri = Uri.fromParts("package", activity?.packageName, null)
-                intent.data = uri
-                startActivity(intent)
-            }catch (e: ActivityNotFoundException){
-                e.printStackTrace()
-            }
-        }
-        //negative button
-        permissionAlertDialog.setNegativeButton(R.string.st_cancel){ dialogInterface: DialogInterface, _: Int ->
-            dialogInterface.dismiss()
-        }
 
-        //show
-        permissionAlertDialog.show()
-    }
-    /**
-     * Dexter wasn't implemented due to fragment implementation
-     * */
+
 
 
 }

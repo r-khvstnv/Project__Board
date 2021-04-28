@@ -23,7 +23,7 @@ class SignUpFragment : BaseFragment() {
         auth = FirebaseAuth.getInstance()
 
         binding.ivBack.setOnClickListener {
-            onBackPressed()
+            activity?.onBackPressed()
         }
         binding.llSignUp.setOnClickListener {
             registerUser()
@@ -66,9 +66,8 @@ class SignUpFragment : BaseFragment() {
                                         //successful registration
                                         showSnackBarMessage(requireContext(),
                                             getString(R.string.st_registered))
-                                        //todo change dir
                                         //todo make sth with user
-                                        onBackPressed()
+                                        activity?.onBackPressed()
                                     }
                                     else{
                                         showSnackBarMessage(requireContext(), message)
