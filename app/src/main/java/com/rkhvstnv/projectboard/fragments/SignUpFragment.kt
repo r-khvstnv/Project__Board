@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.firebase.auth.FirebaseAuth
 import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.databinding.FragmentSignUpBinding
+import com.rkhvstnv.projectboard.models.UserDataClass
 
 class SignUpFragment : BaseFragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -55,23 +56,18 @@ class SignUpFragment : BaseFragment() {
                             val firebaseUser = auth.currentUser
                             //store user data in fireStore
                             val user = UserDataClass(firebaseUser!!.uid, name, firebaseUser.email!!)
-                            MyFirebaseClass().registerUser(user, object : MyCallBack{
-                                override fun onCallbackObject(userData: UserDataClass) {}
+                            MyFirebaseClass().createUserData(user, object : MyCallBack{
+                                override fun onCallbackSuccess(any: Any) {
+                                    //successful registration
+                                    showSnackBarMessage(requireContext(),
+                                        getString(R.string.st_registered))
+                                    //todo make sth with user
+                                    activity?.onBackPressed()
+                                }
 
                                 override fun onCallbackErrorMessage(message: String) {
-
                                     hideProgressDialog()
-
-                                    if (message.isEmpty()){
-                                        //successful registration
-                                        showSnackBarMessage(requireContext(),
-                                            getString(R.string.st_registered))
-                                        //todo make sth with user
-                                        activity?.onBackPressed()
-                                    }
-                                    else{
-                                        showSnackBarMessage(requireContext(), message)
-                                    }
+                                    showSnackBarMessage(requireContext(), message)
                                 }
 
                             })

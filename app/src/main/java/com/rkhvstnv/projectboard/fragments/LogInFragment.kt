@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.databinding.FragmentLogInBinding
+import com.rkhvstnv.projectboard.models.UserDataClass
 
 class LogInFragment : BaseFragment() {
     private var _binding: FragmentLogInBinding? = null
@@ -48,7 +49,7 @@ class LogInFragment : BaseFragment() {
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful){
                             MyFirebaseClass().getSignedInUserData(object : MyCallBack{
-                                override fun onCallbackObject(userData: UserDataClass) {
+                                override fun onCallbackSuccess(any: Any) {
                                     hideProgressDialog()
                                     val intent = Intent(activity, MainActivity::class.java)
                                     activity?.startActivity(intent)

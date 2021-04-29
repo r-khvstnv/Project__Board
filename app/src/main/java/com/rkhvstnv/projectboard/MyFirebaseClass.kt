@@ -11,6 +11,8 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.rkhvstnv.projectboard.models.BoardData
+import com.rkhvstnv.projectboard.models.UserDataClass
 
 
 class MyFirebaseClass {
@@ -26,7 +28,7 @@ class MyFirebaseClass {
     fun updateUserPassword(newPassword: String, myCallBack: MyCallBack){
         auth.currentUser?.updatePassword(newPassword)?.addOnCompleteListener { task->
             if (task.isSuccessful){
-                myCallBack.onCallbackErrorMessage("")
+                myCallBack.onCallbackSuccess("")
             }else{
                 myCallBack.onCallbackErrorMessage(task.exception?.message!!)
             }
@@ -36,14 +38,14 @@ class MyFirebaseClass {
         auth.signOut()
     }
 
-    /**FireStore (User Data)*/
+    /**FireStore (User/Board/ Data)*/
     //register new user data in fireStore collections
-    fun registerUser(userData: UserDataClass, myCallBack: MyCallBack){
+    fun createUserData(userData: UserDataClass, myCallBack: MyCallBack){
         //create new collection in firebase
         mFireStore.collection(Constants.USERS).document(getCurrentUserId())
             .set(userData, SetOptions.merge()).addOnCompleteListener { task ->
                     if (task.isSuccessful){
-                        myCallBack.onCallbackErrorMessage("")
+                        myCallBack.onCallbackSuccess("")
                     }else{
                         myCallBack.onCallbackErrorMessage(task.exception?.message!!)
                     }
@@ -56,7 +58,7 @@ class MyFirebaseClass {
             .document(getCurrentUserId()).get().addOnSuccessListener { document ->
                 //save data to object
                 val loggedUser = document.toObject<UserDataClass>()!!
-                myCallBack.onCallbackObject(loggedUser)
+                myCallBack.onCallbackSuccess(loggedUser)
         }.addOnFailureListener {
             myCallBack.onCallbackErrorMessage(it.message!!)
         }
@@ -66,14 +68,41 @@ class MyFirebaseClass {
         mFireStore.collection(Constants.USERS)
             .document(getCurrentUserId()).update(userHashMap).addOnCompleteListener {
                 if (it.isSuccessful){
-                    myCallBack.onCallbackErrorMessage("")
+                    myCallBack.onCallbackSuccess("")
                 } else{
                     myCallBack.onCallbackErrorMessage(it.exception?.message!!)
                 }
             }
     }
 
-    /**Firebase Storage (Images)*/
+    //register new board data in fireStore collections
+    fun createNewBoard(boardData: BoardData, myCallBack: MyCallBack){
+        //set id for document (document path)
+        val documentPath: String = getCurrentUserId() + System.currentTimeMillis()
+        //create new collection in firebase
+        mFireStore.collection(Constants.BOARDS).document(documentPath)
+            .set(boardData, SetOptions.merge()).addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    //return path for saving in user data as beenAttachedToBoards
+                    myCallBack.onCallbackSuccess(documentPath)
+                }else{
+                    myCallBack.onCallbackErrorMessage(task.exception?.message!!)
+                }
+            }
+    }
 
+    /**Firebase Storage (Images)*/
+    fun uploadImage(uri: Uri, pathString: String, myCallBack: MyCallBack){
+        val storageReference: StorageReference =
+            FirebaseStorage.getInstance().reference.child(pathString)
+        storageReference.putFile(uri).addOnSuccessListener { taskSnapshot ->
+            //todo
+            taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener {
+                myCallBack.onCallbackSuccess(it.toString())
+            }
+        }.addOnFailureListener { exception ->
+            myCallBack.onCallbackErrorMessage(exception.message!!)
+        }
+    }
 
 }

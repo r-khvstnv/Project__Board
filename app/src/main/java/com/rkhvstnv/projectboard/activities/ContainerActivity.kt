@@ -1,10 +1,7 @@
 package com.rkhvstnv.projectboard.activities
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentTransaction
-import com.rkhvstnv.projectboard.R
 import com.rkhvstnv.projectboard.databinding.ActivityContainerBinding
-import com.rkhvstnv.projectboard.fragments.ProfileFragment
 import com.rkhvstnv.projectboard.fragments.SplashFragment
 
 class ContainerActivity : BaseActivity() {

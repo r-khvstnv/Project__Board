@@ -1,4 +1,4 @@
-package com.rkhvstnv.projectboard
+package com.rkhvstnv.projectboard.models
 
 import android.os.Parcel
 import android.os.Parcelable
@@ -6,7 +6,9 @@ import android.os.Parcelable
 data class UserDataClass(
     val id: String = "", val name: String = "",
     val email: String = "", val imageProfile:  String = "",
-    val phone: String = "", val fcmToken: String = "") : Parcelable {
+    val phone: String = "", val fcmToken: String = "",
+    val beenAttachedToBoards: ArrayList<String> = ArrayList()
+) : Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -14,9 +16,9 @@ data class UserDataClass(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!
-    ) {
-    }
+        parcel.readString()!!,
+        parcel.createStringArrayList()!!
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
@@ -25,6 +27,7 @@ data class UserDataClass(
         parcel.writeString(imageProfile)
         parcel.writeString(phone)
         parcel.writeString(fcmToken)
+        parcel.writeStringList(beenAttachedToBoards)
     }
 
     override fun describeContents(): Int {

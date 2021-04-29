@@ -4,23 +4,20 @@ package com.rkhvstnv.projectboard.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.databinding.ActivityMainBinding
-import com.rkhvstnv.projectboard.databinding.ActivityNewBoardBinding
 import com.rkhvstnv.projectboard.databinding.NavHeaderMainBinding
-import com.rkhvstnv.projectboard.fragments.NewBoardFragment
-import com.rkhvstnv.projectboard.fragments.ProfileFragment
+import com.rkhvstnv.projectboard.models.UserDataClass
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var userData: UserDataClass
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -28,7 +25,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         setContentView(view)
 
         //action bar with title and icon
-        setupActionBar()
+        setupActionBar(getString(R.string.app_name))
         //update user data
         updateNavHeaderUserDetails()
         //set navigation listener
@@ -36,29 +33,21 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         binding.fabNewBoard.setOnClickListener {
             val intent = Intent(this, NewBoardActivity::class.java)
+            intent.putExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID, userData.id)
+            intent.putExtra(Constants.INTENT_EXTRA_BEEN_ATTACHED_TO_BOARDS_LIST,
+                userData.beenAttachedToBoards)
+
             startActivityForResult(intent, Constants.NEW_BOARD_CODE)
         }
-
-        //get info that user changes own data or not
-
-
-
-
-        //show fab on back to main activity
-        //todo might can be ridiculous
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount == 0){
-                binding.fabNewBoard.visibility = View.VISIBLE
-            }
-        }
-
     }
 
 
-    private fun setupActionBar(){
-        val toolbar = findViewById<Toolbar>(R.id.toolBar)
+    //added click listener and nav icon
+    override fun setupActionBar(mTitle: String){
+        val toolbar = findViewById<Toolbar>(R.id.tool_bar)
         setSupportActionBar(toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_menu)
+        toolbar.title = mTitle
 
         toolbar.setNavigationOnClickListener {
             if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)){
@@ -94,8 +83,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val hBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
         //get data from fireStore
         MyFirebaseClass().getSignedInUserData(object : MyCallBack {
-            override fun onCallbackObject(userData: UserDataClass) {
+            override fun onCallbackSuccess(any: Any) {
                 //user image
+                userData = any as UserDataClass
                 Glide.with(this@MainActivity)
                     .load(userData.imageProfile).fitCenter()
                     .placeholder(R.drawable.ic_profile).into(hBinding.civProfileImage)

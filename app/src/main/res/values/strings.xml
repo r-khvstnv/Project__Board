@@ -19,17 +19,18 @@
     <string name="st_new_password">New password</string>
     <string name="st_phone">Phone number</string>
     <string name="st_please_enter">Please enter</string>
-    <string name="st_enter_data">Please enter Log in data</string>
+    <string name="st_enter_data">Please enter Corresponding Data</string>
     <string name="st_password_mismatch">Password mismatch</string>
     <string name="st_registered">You have successfully registered</string>
 
-    <string name="st_profile"> Profile</string>
-    <string name="st_sign_out"> Sign Out</string>
+    <string name="st_profile">Profile</string>
+    <string name="st_sign_out">Sign Out</string>
     <string name="st_general">General</string>
     <string name="st_security">Security</string>
     <string name="st_save_changes">Save Changes</string>
     <string name="st_password_changed">Password successfully changed</string>
 
+    <string name="st_new_board">New Board</string>
     <string name="st_board_name">Board Name</string>
     <string name="st_create">Create</string>
 </resources>

@@ -8,6 +8,12 @@
     android:orientation="vertical"
     android:background="@color/mWhite"
     tools:context=".activities.NewBoardActivity">
+    <!--action bar-->
+    <include
+        layout="@layout/tool_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_board_image"
         android:layout_width="96dp"
@@ -24,7 +30,7 @@
         android:layout_marginHorizontal="@dimen/dim_general_margin_horizontal"
         >
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_name"
+            android:id="@+id/et_board_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:maxLength="50"
@@ -36,7 +42,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
-        android:id="@+id/ll_sign_up"
+        android:id="@+id/ll_create_board"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_login_height"
         android:layout_marginTop="30dp"

@@ -1,21 +1,28 @@
 package com.rkhvstnv.projectboard.activities
 
+import android.Manifest
 import android.app.Dialog
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.provider.MediaStore
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Gravity
+import android.webkit.MimeTypeMap
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
+import com.rkhvstnv.projectboard.Constants
 import com.rkhvstnv.projectboard.R
 
 open class BaseActivity : AppCompatActivity() {
@@ -46,6 +53,12 @@ open class BaseActivity : AppCompatActivity() {
             addToBackStack(null)
             commit()
         }
+    }
+
+    open fun setupActionBar(mTitle: String){
+        val toolbar = findViewById<Toolbar>(R.id.tool_bar)
+        toolbar.title = mTitle
+        setSupportActionBar(toolbar)
     }
 
     fun showSnackBarMessage(context: Context, message: String){
@@ -98,5 +111,29 @@ open class BaseActivity : AppCompatActivity() {
      * Dexter wasn't implemented due to fragment implementation
      * */
 
+    //file extension (example .png)
+    fun getFileExtension(uri: Uri?): String?{
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(contentResolver.getType(uri!!))
+    }
+
+    fun getImageFromGallery(){
+        val pickImageIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(pickImageIntent, Constants.GALLERY_REQUEST_CODE)
+    }
+
+    fun getImageWithPermissionCheck(){
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+            //get image
+            getImageFromGallery()
+        } else{
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                Constants.READ_STORAGE_PERMISSION_CODE)
+        }
+    }
 
 }
