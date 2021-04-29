@@ -1,46 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
     android:background="@color/mWhite"
     android:gravity="bottom"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
+    <!--User image-->
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_profile_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:src="@drawable/ic_person"
-        app:civ_border_width="3dp"
-        app:civ_border_color="@color/mGreen"
-        android:layout_marginBottom="@dimen/dim_header_margin_vertical"
         android:layout_marginStart="@dimen/dim_header_margin_start"
-        />
+        android:layout_marginBottom="@dimen/dim_header_margin_vertical"
+        android:src="@drawable/ic_person"
+        app:civ_border_color="@color/mGreen"
+        app:civ_border_width="3dp" />
+    <!--username-->
     <TextView
         android:id="@+id/tv_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ruslan Khvastunov"
-        android:textColor="@color/mGreen"
+        android:layout_marginStart="@dimen/dim_header_margin_start"
+        android:layout_marginTop="@dimen/dim_header_margin_top"
+        android:textColor="@color/mDarkGreen"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/dim_header_margin_top"
-        android:layout_marginStart="@dimen/dim_header_margin_start"
-        />
+        tools:text="Ruslan Khvastunov" />
+    <!--email-->
     <TextView
         android:id="@+id/tv_user_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="123456@mail.com"
-        android:textColor="@color/mGreen"
-        android:textSize="14sp"
-        android:layout_marginTop="@dimen/dim_header_margin_top"
         android:layout_marginStart="@dimen/dim_header_margin_start"
+        android:layout_marginTop="@dimen/dim_header_margin_top"
         android:layout_marginBottom="@dimen/dim_header_margin_vertical"
-        />
-
-
+        android:textColor="@color/mLightGreen"
+        android:textSize="14sp"
+        tools:text="r.khvastunov@mail.com" />
 </LinearLayout>

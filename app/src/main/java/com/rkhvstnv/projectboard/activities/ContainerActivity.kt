@@ -11,6 +11,7 @@ class ContainerActivity : BaseActivity() {
         binding = ActivityContainerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        /** Show splash fragment with app name */
         replaceToFragment(this, SplashFragment())
     }
 }

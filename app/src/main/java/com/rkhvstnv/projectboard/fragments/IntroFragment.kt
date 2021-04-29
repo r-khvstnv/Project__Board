@@ -21,7 +21,6 @@ class IntroFragment : BaseFragment() {
 
         binding.llLogIn.setOnClickListener {
             replaceToFragmentAndBackStack(LogInFragment())
-
         }
         binding.llSignUp.setOnClickListener {
             replaceToFragmentAndBackStack(SignUpFragment())

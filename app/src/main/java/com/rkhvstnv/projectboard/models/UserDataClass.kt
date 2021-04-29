@@ -7,6 +7,8 @@ data class UserDataClass(
     val id: String = "", val name: String = "",
     val email: String = "", val imageProfile:  String = "",
     val phone: String = "", val fcmToken: String = "",
+    /**Consist all boardIds to which is attached user,
+     * regardless is he creator or member */
     val beenAttachedToBoards: ArrayList<String> = ArrayList()
 ) : Parcelable {
 

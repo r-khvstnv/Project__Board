@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="5dp"
+    android:background="@color/mWhite"
+    android:elevation="4dp"
+    android:orientation="horizontal">
+
+    <!--Board image-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_item_board_image"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="10dp"
+        android:src="@color/mLightGreen" />
+
+    <!--All info about board-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_item_board_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
+            android:textColor="@color/mDarkGreen"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            tools:text="Board Name" />
+
+        <TextView
+            android:id="@+id/tv_item_board_creator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
+            android:textColor="@color/mLightGreen"
+            android:textSize="16sp"
+            tools:text="Created by: Ruslan" />
+
+        <TextView
+            android:id="@+id/tv_item_board_due_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
+            android:layout_marginTop="5dp"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/mGreen"
+            android:textSize="18sp"
+            tools:text="Due to: 22:07:2021" />
+    </LinearLayout>
+</LinearLayout>

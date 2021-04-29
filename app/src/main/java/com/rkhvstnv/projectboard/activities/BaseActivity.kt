@@ -27,7 +27,8 @@ import com.rkhvstnv.projectboard.R
 
 open class BaseActivity : AppCompatActivity() {
     private lateinit var progressDialog: Dialog
-
+    /** Next method replace container to corresponding fragment
+     *      based on activity which it's called*/
     fun replaceToFragment(activity: BaseActivity, fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -41,6 +42,8 @@ open class BaseActivity : AppCompatActivity() {
 
     }
 
+    /** Next method replace container to corresponding fragment
+     *      based on activity which it's called. Also add fragment to BackStack*/
     fun replaceToFragmentAndBackStack(activity: BaseActivity, fragment: Fragment){
         supportFragmentManager.beginTransaction().apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -49,18 +52,20 @@ open class BaseActivity : AppCompatActivity() {
                 is MainActivity -> replace(R.id.ll_container_main, fragment)
             }
             setReorderingAllowed(true)
-            //add to stack for backing to it
+
             addToBackStack(null)
             commit()
         }
     }
 
+    /** Next method initialize action bar with received title*/
     open fun setupActionBar(mTitle: String){
         val toolbar = findViewById<Toolbar>(R.id.tool_bar)
         toolbar.title = mTitle
         setSupportActionBar(toolbar)
     }
 
+    /** Next method show snack bar*/
     fun showSnackBarMessage(context: Context, message: String){
         val snackBar = Snackbar.make(findViewById(android.R.id.content),
             message, Snackbar.LENGTH_LONG)
@@ -69,6 +74,7 @@ open class BaseActivity : AppCompatActivity() {
         snackBar.show()
     }
 
+    /** Next two methods show/hide progress dialog of background process*/
     fun showProgressDialog(context: Context){
         progressDialog = Dialog(context)
         progressDialog.setContentView(R.layout.progress_dialog)
@@ -82,20 +88,20 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * Next dialog will be shown, if previously user reject all permissions
-     * required to gallery & share features
+     * Next dialog will be shown, if previously user reject all permissions offers
+     *      Required for gallery features
      */
     fun showRationalPermissionDialog(context: Context){
         val permissionAlertDialog = AlertDialog.Builder(context).setMessage(R.string.st_permission_needed_to_be_granted)
         //positive button
         permissionAlertDialog.setPositiveButton(getString(R.string.st_go_to_settings)){ _: DialogInterface, _: Int ->
             try {
-                //move to app settings
+                /** Move to app settings*/
                 val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                 val uri = Uri.fromParts("package", packageName, null)
                 intent.data = uri
                 startActivity(intent)
-            }catch (e: ActivityNotFoundException){
+            } catch (e: ActivityNotFoundException){
                 e.printStackTrace()
             }
         }
@@ -107,23 +113,9 @@ open class BaseActivity : AppCompatActivity() {
         //show
         permissionAlertDialog.show()
     }
-    /**
-     * Dexter wasn't implemented due to fragment implementation
-     * */
 
-    //file extension (example .png)
-    fun getFileExtension(uri: Uri?): String?{
-        return MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(contentResolver.getType(uri!!))
-    }
-
-    fun getImageFromGallery(){
-        val pickImageIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(pickImageIntent, Constants.GALLERY_REQUEST_CODE)
-    }
-
+    /** Next fun check that permission for gallery reading has been granted.
+     *      If it's not, will request permissions*/
     fun getImageWithPermissionCheck(){
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
@@ -135,5 +127,26 @@ open class BaseActivity : AppCompatActivity() {
                 Constants.READ_STORAGE_PERMISSION_CODE)
         }
     }
+
+    /** Next method start intent of Gallery */
+    fun getImageFromGallery(){
+        val pickImageIntent = Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(pickImageIntent, Constants.GALLERY_REQUEST_CODE)
+    }
+
+    /** Next method get file extension
+     *      Required for image saving in storage, due to before uploading
+     *      will generate unique name of file*/
+    //file extension (example .png)
+    fun getFileExtension(uri: Uri?): String?{
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(contentResolver.getType(uri!!))
+    }
+
+
+
+
 
 }

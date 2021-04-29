@@ -22,6 +22,7 @@ import com.rkhvstnv.projectboard.R
 open class BaseFragment : Fragment() {
     private lateinit var progressDialog: Dialog
 
+    /** Next method show snack bar*/
     fun showSnackBarMessage(context: Context, message: String){
         val snackBar = Snackbar.make(requireActivity().findViewById(android.R.id.content),
             message, Snackbar.LENGTH_LONG)
@@ -30,6 +31,7 @@ open class BaseFragment : Fragment() {
         snackBar.show()
     }
 
+    /** Next method replace container to corresponding fragment */
     fun replaceToFragment(fragment: Fragment){
         fragmentManager?.beginTransaction()?.apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
@@ -39,17 +41,20 @@ open class BaseFragment : Fragment() {
         }
     }
 
+    /** Next method replace container to corresponding fragment.
+     *  Also add fragment to BackStack*/
     fun replaceToFragmentAndBackStack(fragment: Fragment){
         fragmentManager?.beginTransaction()?.apply {
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             replace(R.id.ll_container_container, fragment)
             setReorderingAllowed(true)
-            //add to stack for backing to it
+
             addToBackStack(null)
             commit()
         }
     }
 
+    /** Next two methods show/hide progress dialog of background process*/
     fun showProgressDialog(context: Context){
         progressDialog = Dialog(context)
         progressDialog.setContentView(R.layout.progress_dialog)

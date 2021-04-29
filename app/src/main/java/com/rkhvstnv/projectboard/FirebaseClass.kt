@@ -15,7 +15,7 @@ import com.rkhvstnv.projectboard.models.BoardData
 import com.rkhvstnv.projectboard.models.UserDataClass
 
 
-class MyFirebaseClass {
+class FirebaseClass {
     private val mFireStore = Firebase.firestore
     private val auth = FirebaseAuth.getInstance()
 

@@ -24,16 +24,24 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val view = binding.root
         setContentView(view)
 
-        //action bar with title and icon
+        /** Show actionBar with app name*/
         setupActionBar(getString(R.string.app_name))
-        //update user data
+        /**Update user data in navigation View*/
         updateNavHeaderUserDetails()
-        //set navigation listener
+        /**Set navigation listener*/
         binding.navView.setNavigationItemSelectedListener(this)
 
+        /**Listener for new board creation*/
         binding.fabNewBoard.setOnClickListener {
+            /** Start New board activity with extra data*/
             val intent = Intent(this, NewBoardActivity::class.java)
+            /**Next line required for new board id
+             *      New board documentID in fireStore collection will have name based on
+             *      creatorID and time of first uploading*/
             intent.putExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID, userData.id)
+            /** Next arrayList will be updated after new board creation
+             *      More rationally transfer it through intent
+             *      instead of additional request to fireBase*/
             intent.putExtra(Constants.INTENT_EXTRA_BEEN_ATTACHED_TO_BOARDS_LIST,
                 userData.beenAttachedToBoards)
 
@@ -42,7 +50,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
 
-    //added click listener and nav icon
+    /** Next method will be overridden because of adding
+     *      navigationIcon and listener for opening/closing drawerLayout*/
     override fun setupActionBar(mTitle: String){
         val toolbar = findViewById<Toolbar>(R.id.tool_bar)
         setSupportActionBar(toolbar)
@@ -58,6 +67,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         }
     }
 
+    /** Next method initialize corresponding method for each menuItem*/
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.m_profile ->{
@@ -65,9 +75,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 startActivityForResult(intent, Constants.PROFILE_UPDATE_CODE)
             }
             R.id.m_sign_out -> {
-                MyFirebaseClass().signOutUser()
+                FirebaseClass().signOutUser()
                 val intent = Intent(this, ContainerActivity::class.java)
-                //clear stack or flags as new launcher
+                /** Clear stack or flags as new launcher*/
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
                 finish()
@@ -78,11 +88,12 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         return true
     }
 
+    /** Next method update all userData in navigationView */
     private fun updateNavHeaderUserDetails(){
-        //data binding for header view
+        /**data binding for header view*/
         val hBinding = NavHeaderMainBinding.bind(binding.navView.getHeaderView(0))
-        //get data from fireStore
-        MyFirebaseClass().getSignedInUserData(object : MyCallBack {
+        /**get data from fireStore*/
+        FirebaseClass().getSignedInUserData(object : MyCallBack {
             override fun onCallbackSuccess(any: Any) {
                 //user image
                 userData = any as UserDataClass
@@ -101,6 +112,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
 
         })
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

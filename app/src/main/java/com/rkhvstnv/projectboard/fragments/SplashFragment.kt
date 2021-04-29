@@ -7,7 +7,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.rkhvstnv.projectboard.MyFirebaseClass
+import com.rkhvstnv.projectboard.FirebaseClass
 import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.databinding.FragmentSplashBinding
 
@@ -21,8 +21,10 @@ class SplashFragment : BaseFragment() {
     ): View? {
        _binding = FragmentSplashBinding.inflate(inflater, container, false)
 
+        /** Next handler perform some delay and after will redirects to MainActivity,
+         * if user previously had been auth. Otherwise show IntroFragment*/
         Handler(Looper.getMainLooper()).postDelayed({
-            if (MyFirebaseClass().getCurrentUserId().isNotEmpty()){
+            if (FirebaseClass().getCurrentUserId().isNotEmpty()){
                 val intent = Intent(activity, MainActivity::class.java)
                 activity?.startActivity(intent)
                 activity?.finish()

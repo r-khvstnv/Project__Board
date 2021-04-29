@@ -13,8 +13,8 @@ import com.rkhvstnv.projectboard.models.UserDataClass
 class SignUpFragment : BaseFragment() {
     private var _binding: FragmentSignUpBinding? = null
     private val binding get() = _binding!!
-
     private lateinit var auth: FirebaseAuth
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,7 +27,7 @@ class SignUpFragment : BaseFragment() {
             activity?.onBackPressed()
         }
         binding.llSignUp.setOnClickListener {
-            registerUser()
+            requestUserRegistration()
         }
 
         return binding.root
@@ -37,31 +37,30 @@ class SignUpFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun registerUser(){
-        //remove empty spaces
+    private fun requestUserRegistration(){
         val name: String = binding.etName.text.toString()
+        /** Save user time and automatically remove empty spaces, if they were entered*/
         val email: String = binding.etEmail.text.toString().trim { it <= ' ' }
         val password: String = binding.etPassword.text.toString().trim { it <= ' ' }
         val confirmPassword: String = binding.etConfirmPassword.text.toString().trim { it <= ' ' }
 
-        //register user if all data entered right
+        /** Register user if all data entered right*/
         if (validateUserData(name, email, password, confirmPassword)){
-            //it will be hidden in corresponding methods
+
             showProgressDialog(requireContext())
-            //create user
+            /** Create user auth parameters in fireBase*/
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-                        //if tas is success create new user object
+                        /** On success, create user document in FireStore Users collection*/
                         if (task.isSuccessful){
                             val firebaseUser = auth.currentUser
                             //store user data in fireStore
                             val user = UserDataClass(firebaseUser!!.uid, name, firebaseUser.email!!)
-                            MyFirebaseClass().createUserData(user, object : MyCallBack{
+                            FirebaseClass().createUserData(user, object : MyCallBack{
                                 override fun onCallbackSuccess(any: Any) {
-                                    //successful registration
                                     showSnackBarMessage(requireContext(),
                                         getString(R.string.st_registered))
-                                    //todo make sth with user
+                                    /** Get back to IntroFragment*/
                                     activity?.onBackPressed()
                                 }
 
@@ -73,14 +72,17 @@ class SignUpFragment : BaseFragment() {
                             })
                         }
                         else{
-                            //display error message if tas was unsuccessful
+                            /** Display error message,
+                             *  if system couldn't create new auth parameters*/
                             hideProgressDialog()
                             showSnackBarMessage(requireContext(), task.exception?.message.toString())
                         }
                     }
         }
     }
-    //validate inputted data
+
+    /** Next method validate entered data and show corresponding message
+     *  if sth has been inputted wrong*/
     private fun validateUserData(
         name: String, email: String, password: String, confirmPassword: String) : Boolean{
 

@@ -9,7 +9,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.rkhvstnv.projectboard.*
 import com.rkhvstnv.projectboard.activities.MainActivity
 import com.rkhvstnv.projectboard.databinding.FragmentLogInBinding
-import com.rkhvstnv.projectboard.models.UserDataClass
 
 class LogInFragment : BaseFragment() {
     private var _binding: FragmentLogInBinding? = null
@@ -28,7 +27,7 @@ class LogInFragment : BaseFragment() {
             activity?.onBackPressed()
         }
         binding.llLogIn.setOnClickListener {
-            signInUser()
+            requestSignInUser()
         }
         return binding.root
     }
@@ -37,37 +36,31 @@ class LogInFragment : BaseFragment() {
         _binding = null
     }
 
-    private fun signInUser(){
+    /** Next method check that need fields were filled
+     *  If it's completed, will try to signIn user wit this data*/
+    private fun requestSignInUser(){
         if (!binding.etEmail.text.isNullOrEmpty() && !binding.etPassword.text.isNullOrEmpty()){
             val email: String = binding.etEmail.text.toString()
             val password: String = binding.etPassword.text.toString()
 
-            //dialog will be closed in appropriate method
             showProgressDialog(requireContext())
-
+            /** Try to signIn user*/
             auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-                        if (task.isSuccessful){
-                            MyFirebaseClass().getSignedInUserData(object : MyCallBack{
-                                override fun onCallbackSuccess(any: Any) {
-                                    hideProgressDialog()
-                                    val intent = Intent(activity, MainActivity::class.java)
-                                    activity?.startActivity(intent)
-                                    activity?.finish()
-                                }
 
-                                override fun onCallbackErrorMessage(message: String) {
-                                    hideProgressDialog()
-                                    showSnackBarMessage(requireContext(), message)
-                                }
-                            })
-                        }else{
+                        if (task.isSuccessful){
+                            hideProgressDialog()
+
+                            val intent = Intent(activity, MainActivity::class.java)
+                            activity?.startActivity(intent)
+                            activity?.finish()
+
+                        }else{ /** Inform that some problems were occurred */
                             hideProgressDialog()
                             showSnackBarMessage(requireContext(), task.exception?.message!!)
                         }
-
                     }
-        }else{
+        } else{ /** Inform user that all needed data hasn't been entered*/
             showSnackBarMessage(requireContext(), getString(R.string.st_enter_data))
         }
     }

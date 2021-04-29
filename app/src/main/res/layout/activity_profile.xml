@@ -6,24 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activities.ProfileActivity">
+    <!--Container-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
+
         <!--action bar-->
-        <include
-            layout="@layout/tool_bar_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-        <!--Header -->
+        <include layout="@layout/tool_bar_layout" />
+
+        <!--Header layout-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/mWhite"
-            >
-
+            android:background="@color/mWhite">
+            <!--User image-->
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/civ_user_image"
                 android:layout_width="128dp"
@@ -37,32 +35,35 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <!--Username-->
             <TextView
                 android:id="@+id/tv_title_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Ruslan Khvastunov"
                 android:textColor="@color/mDarkGreen"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintLeft_toRightOf="@id/civ_user_image"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/civ_user_image" />
+                app:layout_constraintTop_toTopOf="@id/civ_user_image"
+                tools:text="Ruslan Khvastunov" />
 
+            <!--Email-->
             <TextView
                 android:id="@+id/tv_title_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="1234567890@gmail.com"
                 android:textColor="@color/mLightGreen"
                 android:textSize="14sp"
                 app:layout_constraintLeft_toLeftOf="@id/tv_title_username"
-                app:layout_constraintTop_toBottomOf="@id/tv_title_username" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title_username"
+                tools:text="r.khvastunov@gmail.com" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+        <!--General group-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -73,6 +74,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!--Edit name-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +84,6 @@
             app:helperText="@string/st_name"
             app:helperTextEnabled="true"
             app:helperTextTextColor="@color/mEditTextColor">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
@@ -96,6 +97,7 @@
                 android:textSize="@dimen/dim_profile_edit_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--Edit Phone-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,7 +107,6 @@
             app:helperText="@string/st_phone"
             app:helperTextEnabled="true"
             app:helperTextTextColor="@color/mEditTextColor">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_phone"
                 android:layout_width="match_parent"
@@ -119,6 +120,8 @@
                 android:textSize="@dimen/dim_profile_edit_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <!--Security group-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,6 +132,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <!--Edit new password-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,7 +142,6 @@
             app:helperText="@string/st_new_password"
             app:helperTextEnabled="true"
             app:helperTextTextColor="@color/mEditTextColor">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_new_password"
                 android:layout_width="match_parent"
@@ -152,16 +155,16 @@
                 android:textSize="@dimen/dim_profile_edit_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--Edit confirm password-->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dim_profile_margin_horizontal"
             android:layout_marginVertical="@dimen/dim_profile_edit_text_margin_vertical"
             app:boxStrokeColor="@color/mEditTextColor"
-            app:helperText="@string/st_phone"
+            app:helperText="@string/st_confirm_password"
             app:helperTextEnabled="true"
             app:helperTextTextColor="@color/mEditTextColor">
-
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_new_password_confirm"
                 android:layout_width="match_parent"
@@ -175,6 +178,7 @@
                 android:textSize="@dimen/dim_profile_edit_text_size" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <!--Save button-->
         <LinearLayout
             android:id="@+id/ll_save_changes"
             android:layout_width="match_parent"
@@ -184,7 +188,6 @@
             android:background="@drawable/bg_rectangle_green_solid"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

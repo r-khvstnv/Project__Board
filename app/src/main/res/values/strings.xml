@@ -6,6 +6,7 @@
     <string name="st_go_to_settings">Settings</string>
     <string name="st_cancel">Cancel</string>
     <string name="st_get_started">Lets Get Started</string>
+    <string name="st_back">Back</string>
 
     <string name="st_intro_description">Collaborate and Plan Together Across Multiple Devices
         in Project Boards App</string>
@@ -29,6 +30,7 @@
     <string name="st_security">Security</string>
     <string name="st_save_changes">Save Changes</string>
     <string name="st_password_changed">Password successfully changed</string>
+
 
     <string name="st_new_board">New Board</string>
     <string name="st_board_name">Board Name</string>

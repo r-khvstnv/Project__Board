@@ -7,7 +7,3 @@ interface MyCallBack {
     fun onCallbackSuccess(any: Any)
     fun onCallbackErrorMessage(message: String)
 }
-
-interface OnFragmentResult {
-    fun onResult(fragment: BaseFragment, boolean: Boolean)
-}

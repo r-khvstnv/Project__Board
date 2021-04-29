@@ -21,7 +21,9 @@ class ProfileActivity : BaseActivity() {
         setContentView(binding.root)
 
         setupActionBar(getString(R.string.st_profile))
-        updateUserDataInView()
+
+        loadUserDataInView()
+
         binding.civUserImage.setOnClickListener {
             getImageWithPermissionCheck()
         }
@@ -48,13 +50,16 @@ class ProfileActivity : BaseActivity() {
     }
 
 
-
+    /** Next method request image storing in fireStore, having prepared new fileName.
+     *      After successful execution will store it's URL in boardImageURL for further
+     *      implementation
+     *    */
     private fun requestUserImageUploading(uri: Uri){
         showProgressDialog(this)
         val pathString = Constants.USER_IMAGE + System.currentTimeMillis() +
                 "." + getFileExtension(uri)
 
-        MyFirebaseClass().uploadImage(uri, pathString, object : MyCallBack{
+        FirebaseClass().uploadImage(uri, pathString, object : MyCallBack{
             override fun onCallbackSuccess(any: Any) {
                 userImageURL = any as String
                 hideProgressDialog()
@@ -68,12 +73,17 @@ class ProfileActivity : BaseActivity() {
         })
     }
 
-    private fun updateUserDataInView(){
+    /** Next method request userData from fireStore
+     *  and substitute it in views*/
+    private fun loadUserDataInView(){
         showProgressDialog(this)
-        MyFirebaseClass().getSignedInUserData(object : MyCallBack {
+
+        FirebaseClass().getSignedInUserData(object : MyCallBack {
             override fun onCallbackSuccess(any: Any) {
-                //save data to check further changes
+                /**Save data in object. It helps to check is data has been changed by user
+                 *      Prevent from unnecessary updateRequests*/
                 obtainedUserData = any as UserDataClass
+
                 Glide.with(this@ProfileActivity)
                     .load(obtainedUserData.imageProfile).fitCenter()
                     .placeholder(R.drawable.ic_profile).into(binding.civUserImage)
@@ -93,7 +103,8 @@ class ProfileActivity : BaseActivity() {
         })
     }
 
-    //updates
+    /** Next method firstly check is data in views differs from previously obtained
+     *  and after that will decide call updateMethod or not*/
     private fun requestUserDataUpdate(){
         //initialize hashMap
         val userHashMap = HashMap<String, Any>()
@@ -121,39 +132,31 @@ class ProfileActivity : BaseActivity() {
             }
         }
 
-        MyFirebaseClass().updateUserData(userHashMap, object : MyCallBack {
-            override fun onCallbackSuccess(any: Any) {}
+        FirebaseClass().updateUserData(userHashMap, object : MyCallBack {
+            override fun onCallbackSuccess(any: Any) {
+                setResult(Activity.RESULT_OK)
+                hideProgressDialog()
+                finish()
+            }
 
             override fun onCallbackErrorMessage(message: String) {
                 hideProgressDialog()
-                if (message.isEmpty()){
-                    setResult(Activity.RESULT_OK)
-                    finish()
-                    //set request key for confirmation of profile changes
-                    //todo result ok
-
-                } else{
-                    showSnackBarMessage(this@ProfileActivity, message)
-                }
+                showSnackBarMessage(this@ProfileActivity, message)
             }
         })
     }
 
 
+    /** Next method firstly check is new password field are the same
+     *  and only after that will call passwordUpdate*/
     private fun requestUserPasswordUpdate(){
-        MyFirebaseClass().updateUserPassword(
+        FirebaseClass().updateUserPassword(
             binding.etNewPassword.text.toString(), object : MyCallBack {
                 override fun onCallbackSuccess(any: Any) {}
 
                 override fun onCallbackErrorMessage(message: String) {
-                    if (message.isEmpty()) {
-                        showSnackBarMessage(
-                            this@ProfileActivity,
-                            getString(R.string.st_password_changed)
-                        )
-                    } else {
-                        showSnackBarMessage(this@ProfileActivity, message)
-                    }
+                    hideProgressDialog()
+                    showSnackBarMessage(this@ProfileActivity, message)
                 }
 
             })

@@ -4,60 +4,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/mWhite"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:background="@color/mWhite"
     tools:context=".activities.NewBoardActivity">
     <!--action bar-->
-    <include
-        layout="@layout/tool_bar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+    <include layout="@layout/tool_bar_layout" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/civ_board_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:layout_marginTop="70dp"
-        android:src="@color/mLightGreen"
-        />
+        android:src="@color/mLightGreen" />
+    <!--Board name-->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/name"
         style="@style/MyEditTextOutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:layout_marginHorizontal="@dimen/dim_general_margin_horizontal"
-        >
+        android:layout_marginTop="30dp">
+
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_board_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:maxLength="50"
-            android:inputType="textCapWords"
             android:hint="@string/st_board_name"
+            android:inputType="textCapWords"
+            android:maxLength="50"
             android:textAlignment="viewEnd"
-            android:textCursorDrawable="@color/mEditTextColor"
-            />
+            android:textCursorDrawable="@color/mEditTextColor" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--Create button-->
     <LinearLayout
         android:id="@+id/ll_create_board"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dim_login_height"
-        android:layout_marginTop="30dp"
         android:layout_marginHorizontal="@dimen/dim_general_margin_horizontal"
-        android:orientation="vertical"
-        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:background="@drawable/bg_rectangle_green_solid"
-        >
+        android:gravity="center"
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/st_create"
-            android:textSize="@dimen/dim_login_text_size"
-            android:textColor="@color/mWhite"
             android:textAllCaps="false"
-            />
+            android:textColor="@color/mWhite"
+            android:textSize="@dimen/dim_login_text_size" />
     </LinearLayout>
 </LinearLayout>
