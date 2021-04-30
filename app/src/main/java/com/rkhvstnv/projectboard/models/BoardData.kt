@@ -5,10 +5,9 @@ import android.os.Parcelable
 
 data class BoardData (
     /** BoardID consist of creatorId and timeInMillis of first uploading.
-     *  Hasn't been added in constructor due to it's creating in process of uploading
-     *  and couldn't be called directly. Has strong dependency with user
-     *  (ID Storing in User value beenAttachedToBoards. Moreover, easily detectable by creator)*/
-
+     *  Create in process of uploading preparation.
+     *  Has strong dependency with user (ID Storing in User value beenAttachedToBoards)*/
+    val id: String = "",
     /**Creator unique id*/
     val createdBy: String = "",
     /**Board name and image*/
@@ -24,12 +23,14 @@ data class BoardData (
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readString()!!,
         parcel.createStringArrayList()!!,
         parcel.readLong(),
         parcel.readLong()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(createdBy)
         parcel.writeString(name)
         parcel.writeString(image)

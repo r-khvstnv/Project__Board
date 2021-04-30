@@ -7,3 +7,7 @@ interface MyCallBack {
     fun onCallbackSuccess(any: Any)
     fun onCallbackErrorMessage(message: String)
 }
+
+interface OnItemClicked{
+    fun onClick(position: Int, any: Any)
+}

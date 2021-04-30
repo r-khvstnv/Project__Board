@@ -76,18 +76,29 @@ class FirebaseClass {
     }
 
     //register new board data in fireStore collections
-    fun createNewBoard(boardData: BoardData, myCallBack: MyCallBack){
-        //set id for document (document path)
-        val documentPath: String = getCurrentUserId() + System.currentTimeMillis()
+    fun createNewBoard(docPath: String, boardData: BoardData, myCallBack: MyCallBack){
         //create new collection in firebase
-        mFireStore.collection(Constants.BOARDS).document(documentPath)
+        mFireStore.collection(Constants.BOARDS).document(docPath)
             .set(boardData, SetOptions.merge()).addOnCompleteListener { task ->
                 if (task.isSuccessful){
-                    //return path for saving in user data as beenAttachedToBoards
-                    myCallBack.onCallbackSuccess(documentPath)
+                    myCallBack.onCallbackSuccess("")
                 }else{
                     myCallBack.onCallbackErrorMessage(task.exception?.message!!)
                 }
+            }
+    }
+
+    fun getBoardList(myCallBack: MyCallBack){
+        mFireStore
+            .collection(Constants.BOARDS)
+            .whereArrayContains(Constants.HASH_MAP_ASSIGNED_TO_USER_IDS, getCurrentUserId())
+            .get().addOnSuccessListener {
+                document ->
+                val boardList: ArrayList<BoardData> = ArrayList()
+                boardList.addAll(document.documents as ArrayList<BoardData>)
+                myCallBack.onCallbackSuccess(boardList)
+            }.addOnFailureListener {
+                myCallBack.onCallbackErrorMessage(it.message!!)
             }
     }
 

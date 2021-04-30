@@ -16,7 +16,6 @@ import java.lang.Exception
 
 class NewBoardActivity : BaseActivity() {
     private lateinit var binding: ActivityNewBoardBinding
-    private lateinit var beenAttachedToBoards: ArrayList<String>
     private lateinit var currentUserId: String
     private var boardImageURL: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +26,8 @@ class NewBoardActivity : BaseActivity() {
         setupActionBar(getString(R.string.st_new_board))
 
         /** Get all extra data for activity*/
-        if (intent.hasExtra(Constants.INTENT_EXTRA_BEEN_ATTACHED_TO_BOARDS_LIST)){
+        if (intent.hasExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID)){
             currentUserId = intent.getStringExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID)!!
-            beenAttachedToBoards = intent.getStringArrayListExtra(
-                Constants.INTENT_EXTRA_BEEN_ATTACHED_TO_BOARDS_LIST)!!
         }
 
         /**Listeners */
@@ -109,36 +106,21 @@ class NewBoardActivity : BaseActivity() {
      *      and after that will call corresponding method*/
     private fun requestBoardCreation(){
         showProgressDialog(this)
-
+        /** Set id for document (document path)*/
+        val documentPath: String = currentUserId + System.currentTimeMillis()
         val boardTitle = binding.etBoardName.text.toString()
         /** By default add creator to assigned user's.
          *  Later, new users can be added in board details itself*/
         val assignedUsersList: ArrayList<String> = ArrayList()
         assignedUsersList.add(currentUserId)
         /** Create full-fledged object*/
-        val boardData = BoardData(currentUserId, boardTitle, boardImageURL, assignedUsersList)
+        val boardData = BoardData(documentPath, currentUserId,
+            boardTitle, boardImageURL, assignedUsersList)
         /** Create new document in firebase*/
-        FirebaseClass().createNewBoard(boardData, object : MyCallBack{
+        FirebaseClass().createNewBoard(documentPath, boardData, object : MyCallBack{
             override fun onCallbackSuccess(any: Any) {
-                /** Receive documentID of new board*/
-                val boardId: String = any as String
-                /** Add it in attachedBoards of user*/
-                beenAttachedToBoards.add(boardId)
-                val userHashMap = HashMap<String, Any>()
-                userHashMap[Constants.HASH_MAP_BEEN_ATTACHED_TO_BOARDS] = beenAttachedToBoards
-
-                /**Update userData in fireStore*/
-                FirebaseClass().updateUserData(userHashMap, object : MyCallBack{
-                    override fun onCallbackSuccess(any: Any) {
-                        hideProgressDialog()
-                        finish()//todo add resultOk
-                    }
-
-                    override fun onCallbackErrorMessage(message: String) {
-                        hideProgressDialog()
-                        showSnackBarMessage(this@NewBoardActivity, message)
-                    }
-                })
+                hideProgressDialog()
+                finish()//todo result ok
             }
 
             override fun onCallbackErrorMessage(message: String) {

@@ -5,13 +5,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationView
 import com.rkhvstnv.projectboard.*
+import com.rkhvstnv.projectboard.adapters.BoardItemsAdapter
 import com.rkhvstnv.projectboard.databinding.ActivityMainBinding
 import com.rkhvstnv.projectboard.databinding.NavHeaderMainBinding
+import com.rkhvstnv.projectboard.models.BoardData
 import com.rkhvstnv.projectboard.models.UserDataClass
 
 class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -39,11 +44,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
              *      New board documentID in fireStore collection will have name based on
              *      creatorID and time of first uploading*/
             intent.putExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID, userData.id)
-            /** Next arrayList will be updated after new board creation
-             *      More rationally transfer it through intent
-             *      instead of additional request to fireBase*/
-            intent.putExtra(Constants.INTENT_EXTRA_BEEN_ATTACHED_TO_BOARDS_LIST,
-                userData.beenAttachedToBoards)
 
             startActivityForResult(intent, Constants.NEW_BOARD_CODE)
         }
@@ -113,6 +113,47 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
     }
 
+    /**Next method request boardList from fireStore*/
+    private fun requestBoardList(){
+        FirebaseClass().getBoardList(object : MyCallBack{
+            override fun onCallbackSuccess(any: Any) {
+                val boardList = any as ArrayList<BoardData>
+                setupBoardRecyclerView(boardList)
+            }
+
+            override fun onCallbackErrorMessage(message: String) {
+                showSnackBarMessage(this@MainActivity, message)
+            }
+
+        })
+    }
+    /** Next method load all boards in recyclerview,
+     *  if there are exists and hide noBoards tv*/
+    private fun setupBoardRecyclerView(boardList: ArrayList<BoardData>){
+        showProgressDialog(this)
+        //check amount of boards
+        if (boardList.size > 0){
+            //hide noBoards tv
+            binding.tvNoBoards.visibility = View.VISIBLE
+
+            //setup rv
+            binding.rvBoardsMain.layoutManager = LinearLayoutManager(this)
+            //save size fixed independent from adapter data
+            binding.rvBoardsMain.setHasFixedSize(true)
+
+            val boardItemsAdapter = BoardItemsAdapter(
+                this, boardList, object : OnItemClicked {
+                    override fun onClick(position: Int, any: Any) {
+                        Toast.makeText(this@MainActivity, "Ok", Toast.LENGTH_SHORT).show()
+                    }
+                })
+            binding.rvBoardsMain.adapter = boardItemsAdapter
+            hideProgressDialog()
+        } else{
+            hideProgressDialog()
+        }
+
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
