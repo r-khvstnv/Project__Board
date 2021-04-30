@@ -7,7 +7,7 @@
     <string name="st_cancel">Cancel</string>
     <string name="st_get_started">Lets Get Started</string>
     <string name="st_back">Back</string>
-
+    <string name="st_no_boards">No Boards Available</string>
     <string name="st_intro_description">Collaborate and Plan Together Across Multiple Devices
         in Project Boards App</string>
     <string name="st_login">Log in</string>
