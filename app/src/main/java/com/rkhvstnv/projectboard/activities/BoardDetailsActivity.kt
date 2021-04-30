@@ -1,13 +1,10 @@
 package com.rkhvstnv.projectboard.activities
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.rkhvstnv.projectboard.*
-import com.rkhvstnv.projectboard.adapters.BoardItemsAdapter
 import com.rkhvstnv.projectboard.adapters.MemberItemsAdapter
+import com.rkhvstnv.projectboard.adapters.TaskItemsAdapter
 import com.rkhvstnv.projectboard.databinding.ActivityBoardDetailsBinding
 import com.rkhvstnv.projectboard.models.BoardData
 import com.rkhvstnv.projectboard.models.UserDataClass
@@ -30,13 +27,15 @@ class BoardDetailsActivity : BaseActivity() {
 
     private fun updateDataInViews(){
         showProgressDialog(this)
-        //binding.tvItemBoardDueTo.text = getString(R.string.st_due_to)
+        //binding.tvItemBoardDueTo.text = getString(R.string.st_due_to) todo
         FirebaseClass().getUserList(boardData.assignedToUserIds, object : MyCallBack{
             override fun onCallbackSuccess(any: Any) {
                 userList = any as ArrayList<UserDataClass>
 
                 binding.tvItemBoardCreator.text = userList[0].name
+
                 setupMembersRecyclerView()
+                setupTasksRecyclerView()
 
                 hideProgressDialog()
             }
@@ -63,5 +62,22 @@ class BoardDetailsActivity : BaseActivity() {
 
             })
         binding.rvBoardMembers.adapter = membersAdapter
+    }
+
+    /** Next method load all Members in recyclerview,
+     *  if there are exists */
+    private fun setupTasksRecyclerView(){
+        if (boardData.taskList.size > 0){
+            binding.rvBoardTasks.layoutManager = LinearLayoutManager(this)
+            binding.rvBoardTasks.setHasFixedSize(true)
+            val tasksAdapter = TaskItemsAdapter(
+                this, boardData.id, boardData.taskList, object : OnItemClicked{
+                override fun onClick(position: Int, any: Any) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+            binding.rvBoardTasks.adapter = tasksAdapter
+        }
     }
 }

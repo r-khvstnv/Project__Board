@@ -3,7 +3,7 @@ package com.rkhvstnv.projectboard.models
 import android.os.Parcel
 import android.os.Parcelable
 
-data class TaskModel(val name: String, val isFinished: Boolean): Parcelable{
+data class TaskData(val name: String, var isFinished: Boolean): Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readByte() != 0.toByte()
@@ -18,12 +18,12 @@ data class TaskModel(val name: String, val isFinished: Boolean): Parcelable{
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<TaskModel> {
-        override fun createFromParcel(parcel: Parcel): TaskModel {
-            return TaskModel(parcel)
+    companion object CREATOR : Parcelable.Creator<TaskData> {
+        override fun createFromParcel(parcel: Parcel): TaskData {
+            return TaskData(parcel)
         }
 
-        override fun newArray(size: Int): Array<TaskModel?> {
+        override fun newArray(size: Int): Array<TaskData?> {
             return arrayOfNulls(size)
         }
     }

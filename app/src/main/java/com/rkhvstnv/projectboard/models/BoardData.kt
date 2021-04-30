@@ -18,7 +18,7 @@ data class BoardData (
     val assignedToUserIds: ArrayList<String> = ArrayList(),
     val startDate: Long = 0,
     val dueDate: Long = 0,
-    val taskList: ArrayList<TaskModel> = ArrayList()
+    val taskList: ArrayList<TaskData> = ArrayList()
         ) : Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -28,7 +28,7 @@ data class BoardData (
         parcel.createStringArrayList()!!,
         parcel.readLong(),
         parcel.readLong(),
-        parcel.createTypedArrayList(TaskModel.CREATOR)!!
+        parcel.createTypedArrayList(TaskData.CREATOR)!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

@@ -105,6 +105,17 @@ class FirebaseClass {
             }
     }
 
+    fun updateBoardData(boardId: String, boardHashMap: HashMap<String, Any>, myCallBack: MyCallBack){
+        mFireStore.collection(Constants.BOARDS)
+            .document(boardId).update(boardHashMap).addOnCompleteListener {
+                if (it.isSuccessful){
+                    myCallBack.onCallbackSuccess("")
+                } else{
+                    myCallBack.onCallbackErrorMessage(it.exception?.message!!)
+                }
+            }
+    }
+
     fun getBoardList(myCallBack: MyCallBack){
         mFireStore
             .collection(Constants.BOARDS)
