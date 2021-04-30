@@ -17,7 +17,8 @@ data class BoardData (
      * NOTE: By default creator also added in list at 0 index*/
     val assignedToUserIds: ArrayList<String> = ArrayList(),
     val startDate: Long = 0,
-    val dueDate: Long = 0
+    val dueDate: Long = 0,
+    val taskList: ArrayList<TaskModel> = ArrayList()
         ) : Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -26,7 +27,8 @@ data class BoardData (
         parcel.readString()!!,
         parcel.createStringArrayList()!!,
         parcel.readLong(),
-        parcel.readLong()
+        parcel.readLong(),
+        parcel.createTypedArrayList(TaskModel.CREATOR)!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -37,6 +39,7 @@ data class BoardData (
         parcel.writeStringList(assignedToUserIds)
         parcel.writeLong(startDate)
         parcel.writeLong(dueDate)
+        parcel.writeTypedList(taskList)
     }
 
     override fun describeContents(): Int {

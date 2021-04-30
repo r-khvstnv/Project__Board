@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyTheme.NoActionBar">
-        <activity android:name=".activities.ProfileActivity"></activity>
+        <activity android:name=".activities.BoardDetailsActivity"></activity>
+        <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.NewBoardActivity" />
         <activity
             android:name=".activities.BaseActivity"

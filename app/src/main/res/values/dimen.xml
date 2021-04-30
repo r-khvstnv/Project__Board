@@ -21,4 +21,9 @@
     <dimen name="dim_profile_block_margin_vertical">30dp</dimen>
 
     <dimen name="dim_item_text_margin_horizontal">10dp</dimen>
+
+    <dimen name="dim_board_details_margin_horizontal_general">5dp</dimen>
+    <dimen name="dim_board_details_margin_vertical_general">30dp</dimen>
+
+
 </resources>

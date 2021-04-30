@@ -45,7 +45,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             /**Next line required for new board id
              *      New board documentID in fireStore collection will have name based on
              *      creatorID and time of first uploading*/
-            intent.putExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID, userData.id)
+            intent.putExtra(Constants.EXTRA_CURRENT_USER_ID, userData.id)
 
             startActivityForResult(intent, Constants.NEW_BOARD_CODE)
         }
@@ -119,7 +119,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     private fun requestBoardList(){
         FirebaseClass().getBoardList(object : MyCallBack{
             override fun onCallbackSuccess(any: Any) {
-                val boardList = any as ArrayList<BoardData>
+                val boardList: ArrayList<BoardData> = any as ArrayList<BoardData>
                 setupBoardRecyclerView(boardList)
             }
 
@@ -146,7 +146,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             val boardItemsAdapter = BoardItemsAdapter(
                 this, boardList, object : OnItemClicked {
                     override fun onClick(position: Int, any: Any) {
-                        Toast.makeText(this@MainActivity, "Ok", Toast.LENGTH_SHORT).show()
+                        val boardData = any as BoardData
+                        val intent = Intent(
+                            this@MainActivity, BoardDetailsActivity::class.java)
+                        intent.putExtra(Constants.EXTRA_BOARD_DATA, boardData)
+                        startActivityForResult(intent, Constants.BOARD_DETAILS_CODE)
                     }
                 })
             binding.rvBoardsMain.adapter = boardItemsAdapter
@@ -160,8 +164,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK){
-            if (requestCode == Constants.PROFILE_UPDATE_CODE){
-                updateNavHeaderUserDetails()
+            when(requestCode){
+                Constants.PROFILE_UPDATE_CODE -> updateNavHeaderUserDetails()
+                Constants.NEW_BOARD_CODE -> requestBoardList()
+                Constants.BOARD_DETAILS_CODE -> Toast.makeText(this, "Ok", Toast.LENGTH_SHORT).show()
             }
         }
     }

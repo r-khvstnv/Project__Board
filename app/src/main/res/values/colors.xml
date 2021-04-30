@@ -15,6 +15,7 @@
     <color name="mDarkGreen">#2F403E</color>
     <color name="mGreen">#53736D</color>
     <color name="mLightGreen">#7CA69E</color>
+    <color name="mRed">#A83331</color>
 
     <color name="mEditTextColor">#333740</color> <!--mBlue-->
 </resources>

@@ -26,8 +26,8 @@ class NewBoardActivity : BaseActivity() {
         setupActionBar(getString(R.string.st_new_board))
 
         /** Get all extra data for activity*/
-        if (intent.hasExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID)){
-            currentUserId = intent.getStringExtra(Constants.INTENT_EXTRA_CURRENT_USER_ID)!!
+        if (intent.hasExtra(Constants.EXTRA_CURRENT_USER_ID)){
+            currentUserId = intent.getStringExtra(Constants.EXTRA_CURRENT_USER_ID)!!
         }
 
         /**Listeners */
@@ -120,6 +120,7 @@ class NewBoardActivity : BaseActivity() {
         FirebaseClass().createNewBoard(documentPath, boardData, object : MyCallBack{
             override fun onCallbackSuccess(any: Any) {
                 hideProgressDialog()
+                setResult(Activity.RESULT_OK)
                 finish()//todo result ok
             }
 

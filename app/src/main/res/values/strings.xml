@@ -38,4 +38,13 @@
 
     <string name="st_created_by">Created by: </string>
     <string name="st_due_to">Due to: </string>
+
+    <string name="st_members">Members</string>
+    <string name="st_add_member">Add member</string>
+    <string name="st_tasks">Tasks</string>
+    <string name="st_add_task">Add task</string>
+    <string name="st_delete_task">Delete task</string>
+    <string name="st_delete">Delete</string>
+    <string name="st_delete_board">Delete Board</string>
+    <string name="st_dangerous_action">Dangerous Actions</string>
 </resources>

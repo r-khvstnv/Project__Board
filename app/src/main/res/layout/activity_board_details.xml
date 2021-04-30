@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.BoardDetailsActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+        <!--action bar-->
+        <include layout="@layout/tool_bar_layout" />
+        <!--All info about board-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/mGreen"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_item_board_creator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
+                android:textColor="@color/mWhite"
+                android:textSize="14sp"
+                tools:text="Created by: Ruslan" />
+
+            <TextView
+                android:id="@+id/tv_item_board_due_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/mWhite"
+                android:textSize="20sp"
+                tools:text="Due to: 22:07:2021" />
+        </LinearLayout>
+
+        <!--Members-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dim_board_details_margin_horizontal_general"
+            android:layout_marginTop="@dimen/dim_board_details_margin_vertical_general"
+            android:text="@string/st_members"
+            android:textColor="@color/mDarkGreen"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/dim_board_details_margin_horizontal_general"
+            >
+            <include
+                android:id="@+id/cv_add_member"
+                layout="@layout/item_member"
+                />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_board_members"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <!--Tasks-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dim_board_details_margin_horizontal_general"
+            android:layout_marginTop="@dimen/dim_board_details_margin_vertical_general"
+            android:text="@string/st_tasks"
+            android:textColor="@color/mDarkGreen"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+        <include
+            android:id="@+id/cv_add_task"
+            layout="@layout/item_task"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_board_tasks"
+            android:layout_width="match_parent"
+            android:layout_height="600dp"
+            android:layout_marginHorizontal="@dimen/dim_board_details_margin_horizontal_general"
+            />
+
+        <!--Dangerous zone-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="@dimen/dim_board_details_margin_horizontal_general"
+            android:layout_marginVertical="@dimen/dim_board_details_margin_vertical_general"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/st_dangerous_action"
+                android:textColor="@color/mRed"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <!--Delete button-->
+            <LinearLayout
+                android:id="@+id/ll_delete_board"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/dim_profile_margin_horizontal"
+                android:background="@drawable/bg_rectangle_green_solid"
+                android:backgroundTint="@color/mRed"
+                android:gravity="center"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="2dp"
+                    android:layout_marginHorizontal="10dp"
+                    android:text="@string/st_delete_board"
+                    android:textAllCaps="false"
+                    android:textColor="@color/mWhite"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
