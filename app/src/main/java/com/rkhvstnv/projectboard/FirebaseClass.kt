@@ -75,6 +75,23 @@ class FirebaseClass {
             }
     }
 
+    fun getUserList(idList: ArrayList<String>,myCallBack: MyCallBack){
+        mFireStore
+            .collection(Constants.USERS)
+            .whereIn(Constants.HASH_MAP_ID, idList)
+            .get().addOnSuccessListener {
+                    document ->
+                val userList: ArrayList<UserDataClass> = ArrayList()
+                for (i in document.documents){
+                    userList.add(i.toObject(UserDataClass::class.java)!!)
+                }
+
+                myCallBack.onCallbackSuccess(userList)
+            }.addOnFailureListener {
+                myCallBack.onCallbackErrorMessage(it.message!!)
+            }
+    }
+
     //register new board data in fireStore collections
     fun createNewBoard(docPath: String, boardData: BoardData, myCallBack: MyCallBack){
         //create new collection in firebase

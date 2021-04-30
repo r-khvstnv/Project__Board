@@ -10,7 +10,7 @@
     android:id="@+id/ll_item_member"
     >
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_item_member_image"
+        android:id="@+id/civ_item_member_image"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@drawable/ic_add"

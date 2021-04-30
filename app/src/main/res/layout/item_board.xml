@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
             android:textColor="@color/mDarkGreen"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             tools:text="Board Name" />
 
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/dim_item_text_margin_horizontal"
             android:textColor="@color/mLightGreen"
-            android:textSize="16sp"
+            android:textSize="14sp"
             tools:text="Created by: Ruslan" />
 
         <TextView

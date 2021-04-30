@@ -17,7 +17,7 @@ class BoardItemsAdapter(private val context: Context,
                         private val onItemClicked: OnItemClicked):
     RecyclerView.Adapter<BoardItemsAdapter.MyViewHolder>() {
 
-    class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val civBoardImage: CircleImageView = view.findViewById(R.id.iv_item_board_image)
         val tvBoardName: TextView = view.findViewById(R.id.tv_item_board_name)
         val tvBoardCreator: TextView = view.findViewById(R.id.tv_item_board_creator)

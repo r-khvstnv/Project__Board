@@ -4,6 +4,7 @@ object Constants {
     const val USERS = "Users"
     const val BOARDS = "Boards"
     //this name should be the same as in data classes
+    const val HASH_MAP_ID = "id"
     const val HASH_MAP_IMAGES = "imageProfile"
     const val HASH_MAP_NAME = "name"
     const val HASH_MAP_PHONE = "phone"
