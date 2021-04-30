@@ -95,7 +95,10 @@ class FirebaseClass {
             .get().addOnSuccessListener {
                 document ->
                 val boardList: ArrayList<BoardData> = ArrayList()
-                boardList.addAll(document.documents as ArrayList<BoardData>)
+                for (i in document.documents){
+                    boardList.add(i.toObject(BoardData::class.java)!!)
+                }
+
                 myCallBack.onCallbackSuccess(boardList)
             }.addOnFailureListener {
                 myCallBack.onCallbackErrorMessage(it.message!!)

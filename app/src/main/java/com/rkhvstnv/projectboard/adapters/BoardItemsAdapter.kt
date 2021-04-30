@@ -34,11 +34,11 @@ class BoardItemsAdapter(private val context: Context,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val board = boardList[position]
 
-        Glide.with(context).load(board.image).fitCenter().into(holder.civBoardImage)
+        Glide.with(context).load(board.image).fitCenter().placeholder(R.color.mLightGreen).into(holder.civBoardImage)
         holder.tvBoardName.text = board.name
         holder.tvBoardCreator.text =
             context.resources.getString(R.string.st_created_by) + board.createdBy
-        holder.tvBoardDueToDate.text = context.resources.getString(R.string.st_due_to_date) //+ board.dueDate
+        holder.tvBoardDueToDate.text = context.resources.getString(R.string.st_due_to) //+ board.dueDate
 
         holder.itemView.setOnClickListener {
             onItemClicked.onClick(position, board)

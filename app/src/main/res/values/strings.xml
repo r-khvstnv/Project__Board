@@ -35,4 +35,7 @@
     <string name="st_new_board">New Board</string>
     <string name="st_board_name">Board Name</string>
     <string name="st_create">Create</string>
+
+    <string name="st_created_by">Created by: </string>
+    <string name="st_due_to">Due to: </string>
 </resources>

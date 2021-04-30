@@ -35,6 +35,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         updateNavHeaderUserDetails()
         /**Set navigation listener*/
         binding.navView.setNavigationItemSelectedListener(this)
+        //
+        requestBoardList()
 
         /**Listener for new board creation*/
         binding.fabNewBoard.setOnClickListener {
@@ -134,7 +136,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         //check amount of boards
         if (boardList.size > 0){
             //hide noBoards tv
-            binding.tvNoBoards.visibility = View.VISIBLE
+            binding.tvNoBoards.visibility = View.GONE
 
             //setup rv
             binding.rvBoardsMain.layoutManager = LinearLayoutManager(this)
